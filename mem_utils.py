@@ -1,0 +1,3 @@
+KBSZ = 1024
+HKBSZ = int(KBSZ/2)
+MBSZ = 1048576
