@@ -1,5 +1,5 @@
 # import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import datetime
 def clean_vec(linevec):
     ret_l = list()
@@ -37,7 +37,7 @@ def process_file(filename, ):
 # new_df = pd.DataFrame(process_file("log_file.txt"))
 # new_df = process_file("log_file.txt")
 
-
+"""
 def show_result(new_df, title='', figsize=(10, 20)):
     fig = plt.figure(figsize=figsize)
     ax = fig.add_subplot(111)
@@ -49,4 +49,4 @@ def show_result(new_df, title='', figsize=(10, 20)):
     ax.legend()
 
     plt.show()
-
+"""

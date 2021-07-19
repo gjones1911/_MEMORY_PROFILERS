@@ -4,7 +4,7 @@ from time import time, sleep
 from psutilPlay import process_cmdline, limit_checker, convert_bytes_to
 from bytes_conversions import bytes2human
 import argparse
-from  process_file import process_file, show_result
+from  process_file import process_file #, show_result
 import numpy as np
 
 parser = argparse.ArgumentParser(description='Watches for and logs memory usage for a given program')
@@ -108,7 +108,7 @@ while psutil.pid_exists(pyid):
 print("process ended") 
 # call method to process the log file
 ret_df = process_file(logfile) 
-show_result(ret_df, title='{} memory profile'.format(exe))
+#show_result(ret_df, title='{} memory profile'.format(exe))
 
 
 rssmxO = np.max(ret_df['RSS'])
