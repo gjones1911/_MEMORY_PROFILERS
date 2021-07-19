@@ -122,7 +122,7 @@ print("Max virtual memory size: {}/{}".format(vmmx, vmmxO))
 print("Max Resident Set size: {}/{}".format(rssmx, rssmxO))
 
 
-os.system("rmv {}".format(logfile))
+os.system("rm {}".format(logfile))
 quit(-90)
 
 
