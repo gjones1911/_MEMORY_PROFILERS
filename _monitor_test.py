@@ -1,5 +1,5 @@
 import time
 
-for x in range(5):
-    time.sleep(1*60)
-    print(x)
+for x in range(1):
+    for i in range(10000000):
+        continue

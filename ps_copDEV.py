@@ -98,6 +98,8 @@ print("process ended")
 #
 #
 #
+# processing the log
+print("processing the log file")
 ret_df = process_file(logfile)
 
 try:
