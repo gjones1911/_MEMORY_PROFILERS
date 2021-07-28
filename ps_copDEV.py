@@ -6,6 +6,7 @@ from bytes_conversions import bytes2human
 import argparse
 from  process_file import process_file, show_result
 import numpy as np
+# import time
 
 parser = argparse.ArgumentParser(description='Watches for and logs memory usage for a given program')
 parser.add_argument('--suspect', help='the program to watch for', type=str)
@@ -65,7 +66,7 @@ print('Logging results in {}'.format(logfile))
 print('Waiting on program {} to show it self'.format(exe))
 print('')
 
-
+tstart = None
 # hold tight until we see the program show up
 while holdtight:
     # look through the current prosesses and find the one with the name you were given
@@ -78,18 +79,23 @@ while holdtight:
             # pyproc.suspend()
             holdtight = False
             pyid = proc.pid
+            tstart = time()
             
 # https://unix.stackexchange.com/questions/35129/need-explanation-on-resident-set-size-virtual-size
 # use the pid and ps to take a snap shot of the memory usage and store it into the logfile
 thecmd = "ps -p {} -o pid,rss,vsz,%cpu,etime,stat >> {}".format(pyid, logfile)
+# thecmd = "ps -p {} -o pid,rss,vsz,%cpu,etime,stat".format(pyid)
+print("The log command: ")
 print(thecmd)
 # pyproc.resume()
 while psutil.pid_exists(pyid):
     os.system(thecmd)
     tsample = time()
+    tend = time()
     #while time() - tsample < interval:
     #    print('sampled')
     #    continue
+total_time = tend - tstart
 print("process ended") 
 
 # call method to process the log file
@@ -101,7 +107,9 @@ print("process ended")
 # processing the log
 print("processing the log file")
 ret_df = process_file(logfile)
-
+print(ret_df)
+print(ret_df.keys())
+print()
 try:
     show_result(ret_df, title='{} memory profile'.format(exe))
 except Exception as ex:
@@ -117,7 +125,9 @@ vmmx = bytes2human(vmmxO)
 # Display the virtual memory and resident set size maximums
 print("Max virtual memory size: {}/{}".format(vmmx, vmmxO))
 print("Max Resident Set size: {}/{}".format(rssmx, rssmxO))
-
+print("MAX %CPU : {}".format(np.max(ret_df["%CPU"])))
+print("Elasped Time : {}".format(ret_df["ELAPSED"][-1]))
+print("Wallclock Time : {}".format(total_time))
 # remove the logfile if desired
 os.system("rm {}".format(logfile))
 quit(-90)
